@@ -1,0 +1,11 @@
+{
+  "abril": {
+    "potencia": 5.75,
+    "consumo": 100
+  },
+
+  "mayo": {
+    "potencia": 5.75,
+    "consumo": 50
+  }
+}

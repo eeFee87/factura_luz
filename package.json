@@ -1,0 +1,25 @@
+{
+  "name": "factura_luz",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eeFee87/factura_luz.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eeFee87/factura_luz/issues"
+  },
+  "homepage": "https://github.com/eeFee87/factura_luz#readme",
+  "dependencies": {
+    "@clack/prompts": "^0.6.3",
+    "picocolors": "^1.0.0"
+  }
+}
