@@ -1,11 +1,15 @@
 import { intro, outro, select, text, confirm } from '@clack/prompts';
 import pc from 'picocolors';
-//import data from './facturas.json' assert { type: 'json', integrity: 'sha384-ABC123' };
-import { readFile } from 'fs/promises';
+
+/* import { readFile } from 'fs/promises';
 const facturas = JSON.parse(
   await readFile(new URL('./facturas.json', import.meta.url))
-);
-console.log(facturas.abril);
+); */
+const year2023 = [
+  { mes: 'enero', potencia: 5.75, consumo: 100 },
+  { mes: 'febrero', potencia: 5.75, consumo: 50 },
+];
+
 intro(pc.green(`Bienvenido!!!`));
 const opciones = await select({
   message: pc.blue('Selecciona una opción:'),
@@ -20,19 +24,21 @@ const opciones = await select({
   ],
 });
 if (opciones === 'consumo') {
-  const addconsumo = await text({
-    message: 'Añade el consumo del mes en Kw:',
-    initialValue: '',
-    validate(value) {
-      if (value.length === 0) return `Value is required!`;
-    },
-  });
-  const confirmacion = await confirm({
-    message: 'Estas seguro?',
-  });
-  if (confirmacion === true) {
-    console.log(`Tu consumo ha sido de ${addconsumo} Kw`);
+  let confirmacion = false;
+  let addconsumo;
+  while (confirmacion === false) {
+    addconsumo = await text({
+      message: 'Añade el consumo del mes en Kw:',
+      initialValue: '',
+      validate(value) {
+        if (value.length === 0) return `Value is required!`;
+      },
+    });
+    confirmacion = await confirm({
+      message: 'Estas seguro?',
+    });
   }
+  console.log(`-> Tu consumo ha sido de ${addconsumo} Kw`);
 }
 
 if (opciones === 'potencia') {
@@ -40,12 +46,30 @@ if (opciones === 'potencia') {
 }
 
 if (opciones === 'datos') {
-  console.log('Aqui te muestro las facturas anteriores');
+  const selectMes = await select({
+    message: pc.blue('Selecciona un mes:'),
+    options: Object.entries(year2023).map(([key, value]) => ({
+      value: value.mes,
+      label: ` ${value.mes.padEnd(6, ' ')} · ${value.consumo} Kw`,
+    })),
+  });
+  const [mesFiltrado] = year2023.filter((item) => {
+    if (item.mes === selectMes) {
+      return item;
+    }
+  });
+  const impuestos = 5 % mesFiltrado.consumo;
+  const precioPotencia = 0.09 * 30;
+  let potencia = 5.75;
+
+  const totalAPagar =
+    mesFiltrado.potencia * precioPotencia + mesFiltrado.consumo + impuestos;
+
+  outro(
+    pc.yellow(
+      `-> La factura del mes de ${selectMes} asciende a:` +
+        pc.red(` ${totalAPagar.toFixed(2)} €`)
+    )
+  );
 }
-
-outro(`Gracias por utilizarme`);
-
-/*options: Object.entries(facturas).map(([key, value]) => ({
-    value: key,
-    label: ` ${key.padEnd(8, ' ')} · ${value.consumo} Kw`,
-  })),*/
+outro(pc.green('Gracias por usarme!!'));
