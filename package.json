@@ -20,6 +20,10 @@
   "homepage": "https://github.com/eeFee87/factura_luz#readme",
   "dependencies": {
     "@clack/prompts": "^0.6.3",
-    "picocolors": "^1.0.0"
+    "picocolors": "^1.0.0",
+    "semistandard": "^17.0.0"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^9.1.0"
   }
 }

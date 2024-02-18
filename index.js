@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import { intro, outro, select, text, confirm } from '@clack/prompts';
 import pc from 'picocolors';
 
@@ -7,10 +8,10 @@ const facturas = JSON.parse(
 ); */
 const year2023 = [
   { mes: 'enero', potencia: 5.75, consumo: 100 },
-  { mes: 'febrero', potencia: 5.75, consumo: 50 },
+  { mes: 'febrero', potencia: 5.75, consumo: 50 }
 ];
 
-intro(pc.green(`Bienvenido!!!`));
+intro(pc.green('Bienvenido!!!'));
 const opciones = await select({
   message: pc.blue('Selecciona una opción:'),
   options: [
@@ -19,9 +20,9 @@ const opciones = await select({
     {
       value: 'datos',
       label: 'Consulta facturas anteriores',
-      hint: 'oh no',
-    },
-  ],
+      hint: 'oh no'
+    }
+  ]
 });
 if (opciones === 'consumo') {
   let confirmacion = false;
@@ -31,11 +32,11 @@ if (opciones === 'consumo') {
       message: 'Añade el consumo del mes en Kw:',
       initialValue: '',
       validate(value) {
-        if (value.length === 0) return `Value is required!`;
-      },
+        if (value.length === 0) return 'Value is required!';
+      }
     });
     confirmacion = await confirm({
-      message: 'Estas seguro?',
+      message: 'Estas seguro?'
     });
   }
   console.log(`-> Tu consumo ha sido de ${addconsumo} Kw`);
@@ -50,9 +51,10 @@ if (opciones === 'datos') {
     message: pc.blue('Selecciona un mes:'),
     options: Object.entries(year2023).map(([key, value]) => ({
       value: value.mes,
-      label: ` ${value.mes.padEnd(6, ' ')} · ${value.consumo} Kw`,
-    })),
+      label: ` ${value.mes.padEnd(6, ' ')} · ${value.consumo} Kw`
+    }))
   });
+
   const [mesFiltrado] = year2023.filter((item) => {
     if (item.mes === selectMes) {
       return item;
@@ -60,7 +62,7 @@ if (opciones === 'datos') {
   });
   const impuestos = 5 % mesFiltrado.consumo;
   const precioPotencia = 0.09 * 30;
-  let potencia = 5.75;
+  const potencia = 5.75;
 
   const totalAPagar =
     mesFiltrado.potencia * precioPotencia + mesFiltrado.consumo + impuestos;

@@ -1,0 +1,17 @@
+{
+  "extends": ["semistandard", "eslint-config-prettier"]
+}
+
+/*
+Si queremos agregarlos en el package.json:
+
+
+"eslintConfig": {
+    "extends": [
+      "./node_modules/semistandard/eslintrc.json",
+      "eslint-config-prettier"
+    ]
+  },
+
+  
+*/
